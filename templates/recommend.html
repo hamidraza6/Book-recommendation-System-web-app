@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Recommend Books</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  </head>
+  <body >
+    <div class="container">
+      <div class="top-nav">
+        <a href="/">Home</a>
+        <a href="/recommend">Recommender</a>
+        <a href="/connect">Connect</a>
+      </div>
+      <h1 id="recommend">Recommend Books</h1>
+      <form action="/recommend_books" method="post" class="search-form">
+        <input id="user_input" name="user_input" type="text" value="{{ user_input or '' }}" placeholder="Search book title" required />
+        <button type="submit">Recommend</button>
+      </form>
+
+      {% if error %}
+        <div class="error-message">{{ error }}</div>
+      {% endif %}
+
+      {% if data %}
+        <h2>Recommendations</h2>
+        <div class="container mt-4">
+        {% for item in data %}
+          <div class="book-item">
+            <div class="row g-0 align-items-center">
+              <div class="col-auto">
+                <img src="{{ item[2] }}" alt="cover" />
+              </div>
+              <div class="col">
+                <div><strong>{{ item[0] }}</strong></div>
+                <div class="text-muted">{{ item[1] }}</div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- <p><a href="/">Back to popular books</a></p> -->
+    </div>
+  </body>
+</html>
